@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string("last_name");
+        Schema::create('quotes', function (Blueprint $table) {
+            $table->id();
+            $table->date("date_quote");
+            $table->unsignedBigInteger("user_id");
+            $table->timestamps();
+
+            $table->foreign("user_id")->references("id")->on("users");
         });
     }
 
@@ -21,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('quotes');
     }
 };
